@@ -1,0 +1,56 @@
+version: '2'
+services:
+  # magicmirror:
+  #   container_name: magicmirror_old
+  #   image: karsten13/magicmirror:latest
+  #   network_mode: bridge
+  #   ports:
+  #     - "8586:8080"
+  #   dns:
+  #     - 1.1.1.1
+  #   volumes:
+  #     - ${mm_configpath}/config:/opt/magic_mirror/config
+  #     - ${mm_configpath}/css:/opt/magic_mirror/css
+  #     - ${mm_configpath}/modules:/opt/magic_mirror/modules
+  #   environment:
+  #     - TZ=${mm_TZ}
+  #   restart: unless-stopped
+  #   command:
+  #     - node
+  #     - serveronly
+
+  magicmirrormmpm:
+    container_name: magicmirror
+    image: karsten13/magicmirror:latest
+    ports:
+      - "8585:8080"
+    dns:
+      - 1.1.1.1
+    environment:
+      - TZ=${mm_TZ}
+    volumes:
+      - ${mm_configpath_mmpm}/config:/opt/magic_mirror/config
+      - ${mm_configpath_mmpm}/css:/opt/magic_mirror/css
+      - ${mm_configpath_mmpm}/modules:/opt/magic_mirror/modules
+    restart: unless-stopped
+    command:
+      - npm
+      - run
+      - server
+
+  mmpm:
+    container_name: mmpm
+    image: karsten13/mmpm:latest
+    depends_on:
+      - magicmirrormmpm
+    ports:
+      - "7890:7890"
+      - "7892:7892"
+    dns:
+      - 1.1.1.1
+    volumes:
+      - ${mm_configpath_mmpm}/modules:/home/node/MagicMirror/modules
+      - ${mm_configpath_mmpm}/config:/home/node/MagicMirror/config
+      - ${mm_configpath_mmpm}/css:/home/node/MagicMirror/css
+      - ${mm_configpath_mmpm}/mmpm-config:/home/node/.config/mmpm
+    restart: unless-stopped

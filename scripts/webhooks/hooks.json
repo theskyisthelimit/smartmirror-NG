@@ -1,0 +1,56 @@
+[
+  {
+    "id": "reboot-mm",
+    "execute-command": "/home/pi/reboot.sh",
+    "include-command-output-in-response": true,
+    "trigger-rule":
+    {
+      "match":
+      {
+        "type": "value",
+        "value": "9999",
+        "parameter":
+        {
+          "source": "url",
+          "name": "token"
+        }
+      }
+    }
+  },
+  {
+    "id": "monitor-on",
+    "execute-command": "/home/pi/monitor_on.sh",
+    "include-command-output-in-response": true,
+    "trigger-rule":
+    {
+      "match":
+      {
+        "type": "value",
+        "value": "9999",
+        "parameter":
+        {
+          "source": "url",
+          "name": "token"
+        }
+      }
+    }
+  },
+  {
+    "id": "monitor-off",
+    "execute-command": "/home/pi/monitor_off.sh",
+    "include-command-output-in-response": true,
+    "trigger-rule":
+    {
+      "match":
+      {
+        "type": "value",
+        "value": "9999",
+        "parameter":
+        {
+          "source": "url",
+          "name": "token"
+        }
+      }
+    }
+  }
+]
