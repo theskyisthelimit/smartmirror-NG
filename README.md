@@ -19,11 +19,22 @@ You'll need the following Hardware for your magicmirror
 - Picture Frame
 - Spy Glass
   - e.g. [Mirropane Chrome Spy 4 MM](https://www.brigla-shop.de/spiegel-smart-mirror)
-
+- Duct Tape?
 
 ## Software
+- [Magicmirror](https://github.com/MichMich/MagicMirror)
+- [Docker](https://www.docker.com/)
+- [Portainer](https://www.portainer.io/)
+- [Watchtower](https://github.com/containrrr/watchtower)
+- [PM2](https://pm2.keymetrics.io/)
+- Webhook
+- Python
 
 ## Installation Guide
+
+```sh
+Sudo apt update & sudo apt upgrade
+```
 
 ### Install Docker on Raspberry Pi
 
@@ -56,7 +67,7 @@ docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock con
 ```yaml
     version: "2"
     services:
-      XXX:
+      Portainer:
         container_name: XXX
         privileged: true
         image: XXX:latest
@@ -80,8 +91,82 @@ docker run -d --name watchtower -v /var/run/docker.sock:/var/run/docker.sock con
   ```
 3. Use Portainer Stacks to create a new Stack and import your env file.
 
-You can also use docker-compose manually if you want:
+You can also use docker-compose manually if you are not afraid:
 
-   ```sh
-   docker-compose --env-file mm.env up
-   ```
+```sh
+docker-compose --env-file mm.env up
+```
+
+### Copy Scripts
+
+Copy all the bash (*.sh) scripts from this repository to your raspberry pi on to your home folder or you can also create a subfolder. It's up to you
+
+ID | Name          | Description
+---|---------------|-------------------------------------------------------------------------------------------------------------------------
+1  | mm.sh         | (gotta check this) This script is starts the magicmirror software. I's configured to run magicmirror in clientonly mode.
+2  | monitor_on.sh | This script will is being used by the pir sensor script. When a motion is detected this script will turn on the display.
+3  | monitor_off.sh | This script will is being used by the pir sensor script. When no motion is detected in a certain time, the display will shut off.
+4  | pir.py  | This script will is controlling the behavior of the pir sensor. you can configure the PIR_PIN, LED_PIN and the SHUTOFF_Delay  
+5  | reboot.sh  | This script is being used to reboot the raspberry pi with webhooks  
+6  | reload.sh  | This script will reload the pm2 instance on your raspberry pi without needing to restart the whole computer
+7  | webhook.sh  | This script is being used to start your webhooks
+8  | check_inet.sh  | In the past several years my raspberry pi 3 lost the internet connection several times. When this happens magicmirror will stall. This script monitors if the raspberry pi lost connection to the internet. if so, it will restart.
+
+```sh
+chmod 777
+```
+
+### Install pm2
+
+```sh
+sudo npm install -g pm2
+sudo pm2 startup
+pm2 start mm.sh
+pm2 save
+```
+
+### pm2 controls
+
+#### Restart
+
+```sh
+pm2 restart mm
+```
+
+#### stop
+```sh
+pm2 stop mm
+```
+#### Show logs
+```sh
+pm2 logs mm
+```
+#### Show process informations
+```sh
+pm2 show mm
+```
+
+### Install webhook
+```sh
+sudo apt update
+sudo apt install webhook
+```
+
+### RPi.GPIO Python Library (Check if it works without)
+
+```sh
+sudo apt-get update
+sudo apt-get install rpi.gpio
+```
+
+### crontab configuration
+```sh
+crontab -e
+```
+
+```
+00 00 * * * cd /home/pi/MagicMirror/ && git pull
+0 00 * * * /home/pi/reload.sh
+0 12 * * * /home/pi/reload.sh
+*/5 * * * * /home/pi/check_inet.sh
+```
