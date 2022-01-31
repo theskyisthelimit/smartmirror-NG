@@ -2,7 +2,7 @@
 
 ## Hardware
 
-You'll need the following Hardware for your magicmirror
+You'll need the following hardware for your magicmirror
 
 - [Raspberry Pi 4](https://www.digitec.ch/de/s1/product/raspberry-pi-4-8g-model-b-armv8-entwicklungsboard-kit-13276941?supplier=406802)
   - [Raspberry Pi 4 power adapter](https://www.digitec.ch/de/s1/product/raspberry-pi-official-raspberry-pi-4-power-adapter-netzteil-elektronikzubehoer-gehaeuse-11268330?supplier=406802)
@@ -12,7 +12,7 @@ You'll need the following Hardware for your magicmirror
   - [Pir Sensor](https://www.digitec.ch/de/s1/product/hc-sr501-pir-sensor-elektronikmodul-8193990?supplier=406802)
 - Monitor
   - High Contrast
-  - IPS Panel or OLED Panel
+    - IPS Panel or OLED Panel
   - HDMI Input
   - Needs to have a proper Standby-mode
   - Monitor must turn on as soon as power is plugged in
@@ -31,6 +31,25 @@ You'll need the following Hardware for your magicmirror
 - Python
 
 ## Installation Guide
+
+### Raspberry Pi Installation
+
+Follow the [official raspberry documentation](https://www.raspberrypi.com/documentation/computers/getting-started.html#installing-images-on-mac-os) to get started and install the newest Raspberry Pi OS
+
+If you don’t have a spare HDMI display or keyboard available to hook up the Raspberry Pi you can easily enable SSH by placing an empty file named ssh ( without any extension ) into the boot partition.
+
+To enable SSH on your Raspberry Pi perform the following steps:
+
+1. Power off your Raspberry Pi and remove the SD card.
+2. Insert the SD card into your computer’s card reader. The SD card will mount automatically.
+3. Navigate to the SD card boot directory using your OS file manager. Linux and macOS users can also do this from the command line.
+4. Create a new empty file named ssh, without any extension, inside the boot directory.
+5. Remove the SD card from your computer and put it in your Raspberry Pi.
+6. Power on your Pi board. On boot Pi will check whether this file exists and if it does, SSH will be enabled and the file is removed.
+
+That’s all. Once Raspberry Pi boots up you can SSH into it.
+
+#### Update all the packages
 
 ```sh
 Sudo apt update & sudo apt upgrade
@@ -116,6 +135,41 @@ ID | Name          | Description
 chmod 777
 ```
 
+### Install MagicMirror on raspberry pi
+
+1. Download and install the latest *Node.js* version:
+```sh
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt install -y nodejs
+```
+2. Clone the repository and check out the master branch:
+```sh
+git clone https://github.com/MichMich/MagicMirror
+```
+3. Enter the repository:
+```sh
+cd MagicMirror/
+```
+4. Install the application:
+   ```sh
+   npm install
+   ```
+5. Make a copy of the config sample file:
+   ```sh
+   cp config/config.js.sample config/config.js
+   ```
+6. Start the application:
+   ```sh
+   npm run start
+   ```
+   For **Server Only** use:
+   ```sh
+   npm run server
+   ```
+
+#### Alternative: Use the Installer
+At your own risk and has to be checked before -> https://github.com/sdetweil/MagicMirror_scripts
+
 ### Install pm2
 
 ```sh
@@ -160,6 +214,9 @@ sudo apt-get install rpi.gpio
 ```
 
 ### crontab configuration
+
+Use [crontab.guru](https://crontab.guru/) if you are lazy like me.
+
 ```sh
 crontab -e
 ```
