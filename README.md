@@ -1,5 +1,8 @@
 # smartmirror-NG
 
+## Know-How
+https://www.pcgameshardware.de/Monitor-Display-Hardware-154105/Specials/Der-Monitor-Entwicklung-Technik-und-abgefahrene-Loesungen-865496/
+
 ## Hardware
 
 You'll need the following hardware for your magicmirror
