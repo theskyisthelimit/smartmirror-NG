@@ -1,7 +1,8 @@
 # smartmirror-NG
 
 ## Know-How
-https://www.pcgameshardware.de/Monitor-Display-Hardware-154105/Specials/Der-Monitor-Entwicklung-Technik-und-abgefahrene-Loesungen-865496/
+- https://www.pcgameshardware.de/Monitor-Display-Hardware-154105/Specials/Der-Monitor-Entwicklung-Technik-und-abgefahrene-Loesungen-865496/
+- https://www.twowaymirrors.com/diy-smart-mirror/
 
 ## Hardware
 
