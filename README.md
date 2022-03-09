@@ -1,7 +1,6 @@
 # smartmirror-NG
 
-##
-  - Why a Plattform?
+## Why a Plattform?
 Imagine that you as a B2C or B2B Mirror Screen Supplier can relly on a Partner with a modular SaaS Solution. The Solution is entirely customizable and multi-client capable. From a List you can choose the Input you want to give to your Customers.
 
 The Snow White SaaS can also show Commercials or Advertisment directly into your customers home. At every time the right spot! You cannot be closer and have a better connection. 
